@@ -1,5 +1,9 @@
 package com.tw.burnbrain;
 
+import java.awt.BorderLayout;
+import java.awt.Font;
+import java.awt.Graphics;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -11,51 +15,74 @@ import javax.swing.*;
  * 下部为题目可选的答案
  */
 public class GameUI extends JFrame {
-	public GameUI(){
+	public GameUI(String gameType){
+		this.gameType=gameType;
+		setTitle("游戏界面");
+		backPanel=new JPanel(){
+				public void paintComponent(Graphics g){
+					ImageIcon icon=new ImageIcon("images\\2.jpg");
+					Image img=icon.getImage();
+					g.drawImage(img,0,0,icon.getIconWidth(),icon.getIconHeight(),icon.getImageObserver());
+				}
+			};
+			this.add(backPanel);
 		this.setSize(400,400);
 		this.setLocation(455, 159);
 		title=new JPanel();
 		timeLabel=new JLabel("60");
-		
+		timeLabel.setFont(new Font("宋体 ",   Font.PLAIN,   40));
+		backPanel.setLayout(new BorderLayout());
 		questionIllustrate=new JPanel();
+		questionIllustrate.setLayout(new BorderLayout());
 		answerToChoose=new JPanel();
-		answerToChoose.add(timeLabel);
-		System.out.println("time start to work");
+		title.add(timeLabel);
+		backPanel.add(title,BorderLayout.NORTH);
+		backPanel.add(questionIllustrate,BorderLayout.CENTER);
+		backPanel.add(answerToChoose,BorderLayout.SOUTH);
+		titleLabel=new JLabel(); 
+		questionIllustrate.add(titleLabel,BorderLayout.NORTH);
+		JLabel tm=new JLabel("     题目 :");
+		tm.setHorizontalAlignment(SwingConstants.CENTER);
+		questionIllustrate.add(tm,BorderLayout.WEST);
+		tm.setFont(new Font("宋体 ",   Font.PLAIN,   40));
 		new MyTimerTask();
-		//new Thread(new MakeQuestion()).start();
-		JLabel l=new JLabel();
-		l.setText(".....");
-		answerToChoose.add(l);
-		this.add(title);
-		this.add(questionIllustrate);
-		this.add(answerToChoose);
+		new Thread(new showQuestion(gameType)).start();
 	}
-	//自定义题目的要求
-	/*public void addQuestion(JLabel question){
-		if(question==null)
-			question=new JLabel("结果是多少");
-		title.add(question);
+	public void addTitle(String str_title){
+		titleLabel.setText(str_title);
+		titleLabel.setFont(new Font("宋体 ",   Font.PLAIN,   40));
+		titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
 	}
-	//自定义题目的描述
-	public void addQuestionIllustrate(JLabel queIllustrate){
-		if(queIllustrate==null)
-			queIllustrate=new JLabel("8-4");
-			questionIllustrate.add(queIllustrate);
-	}
-	//自定义题目的可选答案
-	public void addAnswerToChoose(JButton[] answerButtons){
-		for(int i=0;i<answerButtons.length;i++){
-			if(answerButtons[i]==null)
-				answerButtons[i]=new JButton();
-			answerToChoose.add(answerButtons[i]);
+	public void addLabel(JLabel label){
+		if(label!=null){
+		questionIllustrate.add(label,BorderLayout.CENTER);
+		label.setHorizontalAlignment(SwingConstants.CENTER);
+		label.setFont(new Font("宋体 ",   Font.PLAIN,   40));
 		}
-	}*/
+	}
+	public void addButtons(MyButton[] buttons){
+		for(int i=0;i<4;i++){
+			//buttons[i].setSize(30,10);
+			buttons[i].addActionListener(new QuestionResult(gameType));
+			
+			answerToChoose.add(buttons[i]);
+			buttons[i].setBorderPainted(false);
+			buttons[i].setContentAreaFilled(false);
+			}
+	}
+	public static void clear(){
+		answerToChoose.removeAll();
+		questionIllustrate.removeAll();
+		backPanel.repaint();
+	}
 	public static JLabel getTimeLabel(){
 		return timeLabel;
 	}
-	
+	private String gameType;
+	private static JPanel backPanel;
+	private JLabel titleLabel;
 	private static JLabel timeLabel;
 	private JPanel title;
-	private JPanel questionIllustrate;
-	private JPanel answerToChoose;
+	private static JPanel questionIllustrate;
+	private static JPanel answerToChoose;
 }

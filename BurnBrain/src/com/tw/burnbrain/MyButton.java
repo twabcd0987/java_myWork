@@ -7,9 +7,16 @@ public class MyButton extends JButton {
 		super(buttonName);
 		this.isRight = isRight;
 	}
+	public MyButton(){
+		super();
+	}
 	public boolean isRightAnswer(){
 		return isRight;
 	}
+	public void  setIsRight(boolean isRight){
+		this.isRight=isRight;
+	}
+	
 	private String buttonName;
 	private boolean isRight;
 }
