@@ -1,6 +1,7 @@
 package com.tw.burnbrain;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.Graphics;
@@ -21,20 +22,15 @@ class myUI extends JFrame{
 		
 		super();
 		setTitle("主界面");
+		this.setBackground(Color.WHITE);
 		this.setSize(400,400);
 		this.setLocation(455, 159);
 		this.setResizable(false);
 		this.setLayout(new BorderLayout());
 		//设置背景图层，用来显示背景图片
-		JPanel backPanel=new JPanel(){
-			public void paintComponent(Graphics g){
-				ImageIcon icon=new ImageIcon("images\\11.png");
-				Image img=icon.getImage();
-				g.drawImage(img,0,0,icon.getIconWidth(),icon.getIconHeight(),icon.getImageObserver());
-			}
-		};
+		JPanel backPanel=new JPanel();
 		this.add(backPanel,BorderLayout.CENTER);
-		JButton gameB=new JButton("game");
+		JButton gameB=new JButton("开始游戏");
 		gameB.setFont(new   Font( "宋体 ",   Font.PLAIN,   40));
 		backPanel.add(gameB);
 		//设置按钮透明，只显示按钮上的文字
@@ -42,12 +38,10 @@ class myUI extends JFrame{
 		gameB.setBorder(null);
 		//this.add(gameB);
 		gameB.addActionListener(new ActionListener(){
-			
-
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-				System.out.println("ahh");
+			//	System.out.println("ahh");
 				EventQueue.invokeLater(new Runnable() {
 					public void run() {
 						gamechooseui=new gameChooseUI();
@@ -57,12 +51,12 @@ class myUI extends JFrame{
 				});
 			}
 		});
-		JButton illustrate=new JButton("illustrate");
-		illustrate.setFont(new   Font( "宋体 ",   Font.PLAIN,   28));
+		JButton illustrate=new JButton("游戏说明");
+		illustrate.setFont(new   Font( "宋体 ",   Font.PLAIN,   40));
 		backPanel.add(illustrate);
 		illustrate.setContentAreaFilled(false);
 		illustrate.setBorder(null);
-		JButton close=new JButton("close");
+		JButton close=new JButton("退出游戏");
 		GridLayout gl=new GridLayout(3,1);
 		backPanel.setLayout(gl);
 		close.setFont(new   Font( "宋体 ",   Font.PLAIN,   40));

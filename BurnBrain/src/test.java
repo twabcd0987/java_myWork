@@ -1,15 +1,15 @@
 
 public class test {
+	public test(){
+		
+	}
+	public void testA(){
+		testB();
+	}
+	public void testB(){
+		System.out.println("B");
+	}
 	public static void main(String[] args){
-		to2();
-		to1( );
-		System.out.println(i);
-	}
-	public static void to1(){
-		i=1;
-	}
-	public static void to2(){
-		i=2;
-	}
-	private static int i=0;
+		new test();
+}
 }

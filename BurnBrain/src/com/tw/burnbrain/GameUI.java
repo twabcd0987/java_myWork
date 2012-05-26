@@ -1,11 +1,14 @@
 package com.tw.burnbrain;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 import javax.swing.*;
 /*
@@ -26,32 +29,45 @@ public class GameUI extends JFrame {
 				}
 			};
 			this.add(backPanel);
-		this.setSize(400,400);
-		this.setLocation(455, 159);
+		this.setSize(800,500);
+		this.setLocation(300, 100);
 		title=new JPanel();
 		timeLabel=new JLabel("60");
-		timeLabel.setFont(new Font("宋体 ",   Font.PLAIN,   40));
+		timeLabel.setFont(new Font("宋体 ",   Font.PLAIN,   30));
 		backPanel.setLayout(new BorderLayout());
 		questionIllustrate=new JPanel();
 		questionIllustrate.setLayout(new BorderLayout());
+		
 		answerToChoose=new JPanel();
+		answerToChoose.setBackground(Color.YELLOW);
 		title.add(timeLabel);
 		backPanel.add(title,BorderLayout.NORTH);
 		backPanel.add(questionIllustrate,BorderLayout.CENTER);
 		backPanel.add(answerToChoose,BorderLayout.SOUTH);
 		titleLabel=new JLabel(); 
 		questionIllustrate.add(titleLabel,BorderLayout.NORTH);
-		JLabel tm=new JLabel("     题目 :");
-		tm.setHorizontalAlignment(SwingConstants.CENTER);
-		questionIllustrate.add(tm,BorderLayout.WEST);
-		tm.setFont(new Font("宋体 ",   Font.PLAIN,   40));
-		new MyTimerTask();
+		questionIllustrate.setBackground(Color.WHITE);
+	
+		final MyTimerTask mtk=new MyTimerTask();
 		new Thread(new showQuestion(gameType)).start();
+		this.addWindowListener(new WindowAdapter(){
+			public void windowClosing(WindowEvent e){
+				GameUI.this.dispose();
+				gameActionListener.removeAll();
+				gameActionListener.closeUI();
+				Main.gameResult=0;
+				mtk.stop();
+				//System.exit(0);
+			}
+			});
+		
 	}
-	public void addTitle(String str_title){
-		titleLabel.setText(str_title);
-		titleLabel.setFont(new Font("宋体 ",   Font.PLAIN,   40));
-		titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
+	public void addTitle(String title){
+		
+		titleLabel=new JLabel(title); 
+		questionIllustrate.add(titleLabel,BorderLayout.NORTH);
+		this.titleLabel.setFont(new Font("宋体 ",   Font.PLAIN,   40));
+		this.titleLabel.setHorizontalAlignment(SwingConstants.CENTER);	
 	}
 	public void addLabel(JLabel label){
 		if(label!=null){
@@ -60,13 +76,24 @@ public class GameUI extends JFrame {
 		label.setFont(new Font("宋体 ",   Font.PLAIN,   40));
 		}
 	}
+	public  void addResultLabel(JLabel label){
+		if(label!=null){
+			
+			questionIllustrate.add(label,BorderLayout.EAST);
+			label.setHorizontalAlignment(SwingConstants.RIGHT);
+			label.setFont(new Font("宋体 ",   Font.PLAIN,   40));
+			JLabel westLabel=new JLabel();
+			westLabel.setIcon(new ImageIcon("images\\white.jpg"));
+			questionIllustrate.add(westLabel,BorderLayout.WEST);
+			}
+	}
 	public void addButtons(MyButton[] buttons){
-		for(int i=0;i<4;i++){
+		for(int i=0;i<buttons.length;i++){
 			//buttons[i].setSize(30,10);
 			buttons[i].addActionListener(new QuestionResult(gameType));
-			
+			buttons[i].setFont(new Font("宋体 ",   Font.PLAIN,   40));
 			answerToChoose.add(buttons[i]);
-			buttons[i].setBorderPainted(false);
+			buttons[i].setBorderPainted(true); 
 			buttons[i].setContentAreaFilled(false);
 			}
 	}
@@ -78,6 +105,7 @@ public class GameUI extends JFrame {
 	public static JLabel getTimeLabel(){
 		return timeLabel;
 	}
+	private static JLabel  answerlabel;
 	private String gameType;
 	private static JPanel backPanel;
 	private JLabel titleLabel;

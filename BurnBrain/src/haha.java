@@ -4,6 +4,8 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+import javax.swing.JLabel;
+import java.awt.Font;
 
 
 public class haha extends JFrame {
@@ -36,6 +38,10 @@ public class haha extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		contentPane.setLayout(new BorderLayout(0, 0));
 		setContentPane(contentPane);
+		
+		JLabel lblGgggg = new JLabel("ggggg");
+		lblGgggg.setFont(new Font("Consolas", Font.PLAIN, 12));
+		contentPane.add(lblGgggg, BorderLayout.NORTH);
 	}
 
 }

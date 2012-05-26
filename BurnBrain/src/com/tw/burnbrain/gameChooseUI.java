@@ -1,5 +1,6 @@
 package com.tw.burnbrain;
 
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.GridLayout;
 import java.awt.Image;
@@ -16,20 +17,28 @@ public class gameChooseUI extends JFrame{
 		setTitle("游戏选择界面");
 		setVisible(true);
 		setLocation(455, 159);
-		 backPanel=new JPanel(){
+		/* backPanel=new JPanel(){
 			public void paintComponent(Graphics g){
 				ImageIcon icon=new ImageIcon("images\\1.jpg");
 				Image img=icon.getImage();
 				g.drawImage(img,0,0,icon.getIconWidth(),icon.getIconHeight(),icon.getImageObserver());
 			}
-		};
+		};*/
+		backPanel=new JPanel();
+		Font font=new Font("宋体 ",   Font.PLAIN,   40);
 		backPanel.setLayout(new GridLayout(3,1));
 		JButton arith=new JButton("加减乘除");
 		addButton(arith);
 		arith.addActionListener(new gameActionListener("arith"));
-		JButton ssc=new JButton("石头剪刀布");
+		arith.setFont(font);
+		JButton ssc=new JButton("快速猜拳");
 		addButton(ssc);
 		ssc.addActionListener(new gameActionListener("ssc"));
+		ssc.setFont(font);
+		JButton color=new JButton("颜色判断");
+		addButton(color);
+		color.addActionListener(new gameActionListener("color"));
+		color.setFont(font);
 		add(backPanel);
 	}
 	public void addButton(JButton button){

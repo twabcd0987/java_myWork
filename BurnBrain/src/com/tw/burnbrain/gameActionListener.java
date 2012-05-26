@@ -17,19 +17,23 @@ public class gameActionListener implements ActionListener {
 		
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
-				
-				if(true){
 				//System.out.println(e.getSource());
+				
 				gameUI=new GameUI(gameType);
 				gameUI.setVisible(true);
-				gameUI.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-				}
+				
+				//gameUI.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+				
 			}
 		});
 	}
 	public static void closeUI(){
 		gameUI.dispose();
 	}
+	public static void removeAll(){
+		GameUI.clear();
+	}
 	
 	public static GameUI gameUI;
+	
 }

@@ -32,7 +32,7 @@ public class MusicPlayer implements Runnable{
 						audioFormat.getChannels(),
 						audioFormat.getChannels() * 2,
 						audioFormat.getSampleRate(), false);
-				System.out.println("Converting audio format to " + newFormat);
+			//	System.out.println("Converting audio format to " + newFormat);
 				AudioInputStream newStream = AudioSystem.getAudioInputStream(
 						newFormat, m_audioInputStream);
 				audioFormat = newFormat;
@@ -44,11 +44,9 @@ public class MusicPlayer implements Runnable{
 			m_line = (SourceDataLine) AudioSystem.getLine(info);
 			m_line.open(audioFormat, m_line.getBufferSize());
 			m_line.start();
-
 			int bufferSize = (int) audioFormat.getSampleRate()
 					* audioFormat.getFrameSize();
 			byte[] buffer = new byte[bufferSize];
-
 			int bytesRead = 0;
 			while (bytesRead >= 0) {
 				bytesRead = m_audioInputStream.read(buffer, 0, buffer.length);

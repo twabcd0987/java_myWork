@@ -20,12 +20,11 @@ public class Main {
 				ui.setVisible(true);
 			}
 		});
-		//new Thread(new MusicPlayer()).start();
+	//	new Thread(new MusicPlayer()).start();
 		//new Thread(new DBConnection()).start();
 		
 }
 		//一局游戏的结果
 		public static int gameResult=0;
 	public static JFrame ui; 
-	public static String GAME_TYPE;
 }
